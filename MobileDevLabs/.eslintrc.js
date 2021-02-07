@@ -13,5 +13,15 @@ module.exports = {
         sourceType: 'module',
         tsconfigRootDir: __dirname,
         project: ['./tsconfig.json']
+    },
+    rules: {
+        '@typescript-eslint/no-use-before-define': [
+            'warn',
+            { variables: false }
+        ],
+        'react/destructuring-assignment': 'warn',
+        'react/jsx-props-no-spreading': 'warn',
+        'global-require': 'warn',
+        'react/prop-types': 'warn'
     }
 };
