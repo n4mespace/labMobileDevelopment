@@ -22,7 +22,9 @@ const GeneralTabNavigator = () => (
         <GeneralTabStack.Screen
             name="GeneralTabScreen"
             component={GeneralTabScreen}
-            options={{ headerTitle: 'Lab 1' }}
+            options={{
+                headerTitle: 'Lab 1'
+            }}
         />
     </GeneralTabStack.Navigator>
 );
