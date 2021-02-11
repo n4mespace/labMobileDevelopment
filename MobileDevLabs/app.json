@@ -1,7 +1,7 @@
 {
     "expo": {
-        "name": "MobileDevLabs",
-        "slug": "MobileDevLabs",
+        "name": "MobileDevLabs_2",
+        "slug": "MobileDevLabs_2",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/images/adaptive-icon.png",

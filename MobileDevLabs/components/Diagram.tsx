@@ -1,6 +1,10 @@
 import * as React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from './Themed';
 
-const Diagram = () => <Text>Bye</Text>;
+const Diagram = () => (
+    <View>
+        <Text>Bye</Text>
+    </View>
+);
 
 export default Diagram;

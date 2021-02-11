@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        margin: 10
     },
     title: {
         fontSize: 20,
