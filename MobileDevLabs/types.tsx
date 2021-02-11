@@ -4,14 +4,14 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-    GeneralTab: undefined;
-    InfoTab: undefined;
+    General: undefined;
+    Drawing: undefined;
 };
 
 export type GeneralTabParamList = {
     GeneralTabScreen: undefined;
 };
 
-export type InfoTabParamList = {
-    InfoTabScreen: undefined;
+export type DrawingTabParamList = {
+    DrawingTabScreen: undefined;
 };

@@ -6,14 +6,14 @@ export default {
         screens: {
             Root: {
                 screens: {
-                    GeneralTab: {
+                    General: {
                         screens: {
                             GeneralTabScreen: 'general'
                         }
                     },
-                    InfoTab: {
+                    Drawing: {
                         screens: {
-                            InfoTabScreen: 'info'
+                            DrawingTabScreen: 'drawing'
                         }
                     }
                 }

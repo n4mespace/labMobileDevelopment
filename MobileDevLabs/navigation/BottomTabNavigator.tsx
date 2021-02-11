@@ -6,16 +6,16 @@ import * as React from 'react';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import GeneralTabScreen from '../screens/GeneralTabScreen';
-import InfoTabScreen from '../screens/InfoTabScreen';
+import DrawingTabScreen from '../screens/DrawingTabScreen';
 import {
     BottomTabParamList,
     GeneralTabParamList,
-    InfoTabParamList
+    DrawingTabParamList
 } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 const GeneralTabStack = createStackNavigator<GeneralTabParamList>();
-const InfoTabStack = createStackNavigator<InfoTabParamList>();
+const DrawingTabStack = createStackNavigator<DrawingTabParamList>();
 
 const GeneralTabNavigator = () => (
     <GeneralTabStack.Navigator>
@@ -23,20 +23,20 @@ const GeneralTabNavigator = () => (
             name="GeneralTabScreen"
             component={GeneralTabScreen}
             options={{
-                headerTitle: 'Lab 1'
+                headerTitle: 'Lab 2'
             }}
         />
     </GeneralTabStack.Navigator>
 );
 
-const InfoTabNavigator = () => (
-    <InfoTabStack.Navigator>
-        <InfoTabStack.Screen
-            name="InfoTabScreen"
-            component={InfoTabScreen}
-            options={{ headerTitle: 'Lab 1' }}
+const DrawingTabNavigator = () => (
+    <DrawingTabStack.Navigator>
+        <DrawingTabStack.Screen
+            name="DrawingTabScreen"
+            component={DrawingTabScreen}
+            options={{ headerTitle: 'Lab 2' }}
         />
-    </InfoTabStack.Navigator>
+    </DrawingTabStack.Navigator>
 );
 
 const TabBarIcon = (props: {
@@ -49,11 +49,11 @@ const BottomTabNavigator = () => {
 
     return (
         <BottomTab.Navigator
-            initialRouteName="GeneralTab"
+            initialRouteName="General"
             tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
         >
             <BottomTab.Screen
-                name="GeneralTab"
+                name="General"
                 component={GeneralTabNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
@@ -62,11 +62,11 @@ const BottomTabNavigator = () => {
                 }}
             />
             <BottomTab.Screen
-                name="InfoTab"
-                component={InfoTabNavigator}
+                name="Drawing"
+                component={DrawingTabNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
-                        <TabBarIcon name="home" color={color} />
+                        <TabBarIcon name="areachart" color={color} />
                     )
                 }}
             />

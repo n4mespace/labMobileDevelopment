@@ -5,7 +5,9 @@ import { Text, View } from '../components/Themed';
 
 const GeneralTabScreen = () => (
     <View style={styles.container}>
-        <Text style={styles.title}>Home</Text>
+        <Text style={styles.title}>Захарчук Даниїл</Text>
+        <Text style={styles.title}>Група ІВ-82</Text>
+        <Text style={styles.title}>ІВ-8210</Text>
         <View
             style={styles.separator}
             lightColor="#eee"
