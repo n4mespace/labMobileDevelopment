@@ -9,24 +9,44 @@ import window from '../constants/Layout';
 import useColorScheme from '../hooks/useColorScheme';
 import GeneralTabScreen from '../screens/GeneralTabScreen';
 import DrawingTabScreen from '../screens/DrawingTabScreen';
+import MoviesTabScreen from '../screens/MoviesTabScreen';
 import {
     BottomTabParamList,
     GeneralTabParamList,
+    MoviesTabParamList,
     DrawingTabParamList
 } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 const GeneralTabStack = createStackNavigator<GeneralTabParamList>();
 const DrawingTabStack = createStackNavigator<DrawingTabParamList>();
+const MoviesTabStack = createStackNavigator<MoviesTabParamList>();
 
 const GeneralTabNavigator = () => (
     <GeneralTabStack.Navigator>
         <GeneralTabStack.Screen
             name="GeneralTabScreen"
             component={GeneralTabScreen}
-            options={{ headerTitle: 'Lab 2' }}
+            options={{ headerTitle: 'Lab 3' }}
         />
     </GeneralTabStack.Navigator>
+);
+
+const MoviesTabNavigator = ({
+    screenOrientation
+}: {
+    screenOrientation: string;
+}) => (
+    <MoviesTabStack.Navigator>
+        <MoviesTabStack.Screen
+            name="MoviesTabScreen"
+            component={MoviesTabScreen}
+            options={{
+                headerTitle: 'Lab 3',
+                headerShown: screenOrientation === 'portrait'
+            }}
+        />
+    </MoviesTabStack.Navigator>
 );
 
 const DrawingTabNavigator = ({
@@ -38,7 +58,7 @@ const DrawingTabNavigator = ({
         <DrawingTabStack.Screen
             name="DrawingTabScreen"
             options={{
-                headerTitle: 'Lab 2',
+                headerTitle: 'Lab 3',
                 headerShown: screenOrientation === 'portrait'
             }}
         >
@@ -88,6 +108,18 @@ const BottomTabNavigator = () => {
                     <DrawingTabNavigator
                         screenOrientation={screenOrientation}
                     />
+                )}
+            </BottomTab.Screen>
+            <BottomTab.Screen
+                name="Movies"
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <TabBarIcon name="database" color={color} />
+                    )
+                }}
+            >
+                {() => (
+                    <MoviesTabNavigator screenOrientation={screenOrientation} />
                 )}
             </BottomTab.Screen>
         </BottomTab.Navigator>

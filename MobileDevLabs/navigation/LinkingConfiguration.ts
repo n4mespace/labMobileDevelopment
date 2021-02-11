@@ -15,6 +15,11 @@ export default {
                         screens: {
                             DrawingTabScreen: 'drawing'
                         }
+                    },
+                    Movies: {
+                        screens: {
+                            MoviesTabScreen: 'movies'
+                        }
                     }
                 }
             },
