@@ -3,7 +3,7 @@
         "name": "MobileDevLabs_2",
         "slug": "MobileDevLabs_2",
         "version": "1.0.0",
-        "orientation": "portrait",
+        "orientation": "default",
         "icon": "./assets/images/adaptive-icon.png",
         "scheme": "myapp",
         "userInterfaceStyle": "automatic",

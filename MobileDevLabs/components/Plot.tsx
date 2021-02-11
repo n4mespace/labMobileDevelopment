@@ -6,20 +6,18 @@ import { View } from './Themed';
 
 const Plot = () => (
     <View style={styles.container}>
-        <VictoryChart
-            theme={VictoryTheme.material}
-            height={window.window.height / 1.5}
-            width={window.window.width}
-        >
+        <VictoryChart theme={VictoryTheme.material}>
             <VictoryLine
                 domain={{ x: [-4, 4], y: [-1, 1] }}
                 responsive={false}
+                height={window.window.height / 1.5}
+                width={window.window.width / 1.5}
                 style={{
                     data: { stroke: '#c43a31' },
-                    parent: { border: '2px solid #ccc' }
+                    parent: { border: '1px solid #ccc' }
                 }}
-                samples={30}
-                y={(d: { x: number }) => (d.x > 0 ? Math.log(d.x) : -100)}
+                samples={35}
+                y={(d: { x: number }) => (d.x > 0 ? Math.log10(d.x) : -10000)}
             />
         </VictoryChart>
     </View>

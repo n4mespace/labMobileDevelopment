@@ -2,8 +2,10 @@ import { AntDesign } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { Dimensions } from 'react-native';
 
 import Colors from '../constants/Colors';
+import window from '../constants/Layout';
 import useColorScheme from '../hooks/useColorScheme';
 import GeneralTabScreen from '../screens/GeneralTabScreen';
 import DrawingTabScreen from '../screens/DrawingTabScreen';
@@ -22,20 +24,26 @@ const GeneralTabNavigator = () => (
         <GeneralTabStack.Screen
             name="GeneralTabScreen"
             component={GeneralTabScreen}
-            options={{
-                headerTitle: 'Lab 2'
-            }}
+            options={{ headerTitle: 'Lab 2' }}
         />
     </GeneralTabStack.Navigator>
 );
 
-const DrawingTabNavigator = () => (
+const DrawingTabNavigator = ({
+    screenOrientation
+}: {
+    screenOrientation: string;
+}) => (
     <DrawingTabStack.Navigator>
         <DrawingTabStack.Screen
             name="DrawingTabScreen"
-            component={DrawingTabScreen}
-            options={{ headerTitle: 'Lab 2' }}
-        />
+            options={{
+                headerTitle: 'Lab 2',
+                headerShown: screenOrientation === 'portrait'
+            }}
+        >
+            {() => <DrawingTabScreen screenOrientation={screenOrientation} />}
+        </DrawingTabStack.Screen>
     </DrawingTabStack.Navigator>
 );
 
@@ -46,6 +54,13 @@ const TabBarIcon = (props: {
 
 const BottomTabNavigator = () => {
     const colorScheme = useColorScheme();
+    const [screenOrientation, setScreenOrientation] = React.useState(
+        window.isPortrait() ? 'portrait' : 'landscape'
+    );
+
+    Dimensions.addEventListener('change', () =>
+        setScreenOrientation(window.isPortrait() ? 'portrait' : 'landscape')
+    );
 
     return (
         <BottomTab.Navigator
@@ -63,13 +78,18 @@ const BottomTabNavigator = () => {
             />
             <BottomTab.Screen
                 name="Drawing"
-                component={DrawingTabNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <TabBarIcon name="areachart" color={color} />
                     )
                 }}
-            />
+            >
+                {() => (
+                    <DrawingTabNavigator
+                        screenOrientation={screenOrientation}
+                    />
+                )}
+            </BottomTab.Screen>
         </BottomTab.Navigator>
     );
 };

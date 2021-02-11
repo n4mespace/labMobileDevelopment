@@ -22,6 +22,6 @@ module.exports = {
         'react/destructuring-assignment': 'warn',
         'react/jsx-props-no-spreading': 'warn',
         'global-require': 'warn',
-        'react/prop-types': 'warn'
+        'react/prop-types': ['off']
     }
 };
