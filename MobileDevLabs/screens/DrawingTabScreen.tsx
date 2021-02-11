@@ -27,19 +27,17 @@ const DrawingTabScreen = ({
                     textRightStyle={styles.text}
                     textLeftStyle={styles.text}
                     containerStyle={{
-                        marginTop: 16,
+                        margin: 18,
                         width: 170,
                         height: 60,
-                        borderRadius: 50,
-                        padding: 0
+                        borderRadius: 50
                     }}
                     backgroundColorOn="#e5e1e0"
                     backgroundColorOff="#e5e1e0"
                     circleStyle={{
                         width: 90,
                         height: 65,
-                        borderRadius: 30,
-                        backgroundColor: 'blue'
+                        borderRadius: 30
                     }}
                     switchOn={plotOrDiagram}
                     onPress={toggleSwitch}
@@ -60,8 +58,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        flexDirection: 'column',
-        margin: 10
+        flexDirection: 'column'
     },
     title: {
         fontSize: 20,
