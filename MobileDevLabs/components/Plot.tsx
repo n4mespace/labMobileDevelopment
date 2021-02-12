@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { VictoryLine, VictoryChart, VictoryTheme } from '../Victory';
+import { VictoryLine, VictoryChart, VictoryTheme } from '../hooks/Victory';
 import window from '../constants/Layout';
 import { View } from './Themed';
 
