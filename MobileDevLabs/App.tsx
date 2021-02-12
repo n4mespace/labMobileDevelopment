@@ -10,15 +10,12 @@ const App = () => {
     const isLoadingComplete = useCachedResources();
     const colorScheme = useColorScheme();
 
-    if (!isLoadingComplete) {
-        return null;
-    }
-    return (
+    return isLoadingComplete ? (
         <SafeAreaProvider>
             <Navigation colorScheme={colorScheme} />
             <StatusBar />
         </SafeAreaProvider>
-    );
+    ) : null;
 };
 
 export default App;

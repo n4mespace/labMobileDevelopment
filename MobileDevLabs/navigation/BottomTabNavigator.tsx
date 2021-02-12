@@ -10,6 +10,8 @@ import useColorScheme from '../hooks/useColorScheme';
 import GeneralTabScreen from '../screens/GeneralTabScreen';
 import DrawingTabScreen from '../screens/DrawingTabScreen';
 import MoviesTabScreen from '../screens/MoviesTabScreen';
+import MovieDetailTabScreen from '../screens/MovieDetailTabScreen';
+
 import {
     BottomTabParamList,
     GeneralTabParamList,
@@ -27,7 +29,7 @@ const GeneralTabNavigator = () => (
         <GeneralTabStack.Screen
             name="GeneralTabScreen"
             component={GeneralTabScreen}
-            options={{ headerTitle: 'Lab 3' }}
+            options={{ headerTitle: 'Lab 4' }}
         />
     </GeneralTabStack.Navigator>
 );
@@ -42,9 +44,14 @@ const MoviesTabNavigator = ({
             name="MoviesTabScreen"
             component={MoviesTabScreen}
             options={{
-                headerTitle: 'Lab 3',
+                headerTitle: 'Lab 4',
                 headerShown: screenOrientation === 'portrait'
             }}
+        />
+        <MoviesTabStack.Screen
+            name="MovieDetailTabScreen"
+            component={MovieDetailTabScreen}
+            options={{ headerShown: false }}
         />
     </MoviesTabStack.Navigator>
 );
@@ -58,7 +65,7 @@ const DrawingTabNavigator = ({
         <DrawingTabStack.Screen
             name="DrawingTabScreen"
             options={{
-                headerTitle: 'Lab 3',
+                headerTitle: 'Lab 4',
                 headerShown: screenOrientation === 'portrait'
             }}
         >
