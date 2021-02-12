@@ -5,42 +5,40 @@ import { MovieItem } from '../types';
 import { View, Text } from './Themed';
 
 const MovieDetail = ({ movie }: { movie: MovieItem }) => (
-    <View style={styles.leftColumn}>
+    <View style={styles.container} key={movie.imdbID}>
         <Image
             source={movie.Poster}
             resizeMode="contain"
             style={styles.image}
         />
-        <View style={styles.infoColumn}>
-            <Text style={styles.mainText}>{movie.Title}</Text>
-            {movie.Year ? (
-                <Text style={styles.secondaryText}>{movie.Year}</Text>
-            ) : null}
-            {movie.Type ? (
-                <Text style={styles.secondaryText}>{movie.Type}</Text>
-            ) : null}
-        </View>
+        {Object.entries(movie).map(([key, value], idx) =>
+            key !== 'imdbID' && key !== 'Poster' ? (
+                <Text style={idx % 3 === 0 ? styles.separator : {}}>
+                    <Text style={styles.text}>{key}: </Text>
+                    <Text>{value}</Text>
+                </Text>
+            ) : null
+        )}
     </View>
 );
 
 const styles = StyleSheet.create({
-    leftColumn: {
+    container: {
         flex: 1,
-        flexDirection: 'row'
+        padding: '10%',
+        alignItems: 'flex-start',
+        justifyContent: 'center'
     },
     image: {
-        height: window.window.height / 5,
-        width: window.window.width / 3,
-        margin: 5
+        alignSelf: 'center',
+        height: window.window.height / 2,
+        width: window.window.width / 1.5,
+        margin: 20
     },
-    infoColumn: {
-        flex: 1,
-        flexDirection: 'column'
+    separator: {
+        marginBottom: '3%'
     },
-    mainText: {
-        marginBottom: 10
-    },
-    secondaryText: {
+    text: {
         color: 'gray'
     }
 });

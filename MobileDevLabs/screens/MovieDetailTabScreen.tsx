@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 import MovieDetail from '../components/MovieDetail';
 import { View } from '../components/Themed';
@@ -13,16 +13,20 @@ const MovieDetailTabScreen = ({
     route: { params: { movie: MovieItem } };
 }) => (
     <View style={styles.container}>
-        <MovieDetail movie={movie} />
+        <ScrollView
+            fadingEdgeLength={50}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+        >
+            <MovieDetail movie={movie} />
+        </ScrollView>
     </View>
 );
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: '3%',
         alignItems: 'center',
-        justifyContent: 'center'
+        flex: 1
     }
 });
 
