@@ -18,7 +18,7 @@ const MovieDetailTabScreen = ({
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
         >
-            <MovieDetail movie={movie} />
+            <MovieDetail movie={movie} key={movie.imdbID} />
         </ScrollView>
     </View>
 );

@@ -1,27 +1,29 @@
 import * as React from 'react';
-import { StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-
+import { StyleSheet, FlatList } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import Movie from '../components/Movie';
+import Movies from '../collections/MoviesList';
 import window from '../constants/Layout';
 import { View } from '../components/Themed';
-import Movies from '../collections/MoviesList';
-import { MovieItem } from '../types';
+import { MovieItem, MoviesList } from '../types';
 
 const MoviesTabScreen = () => {
+    const [movies, setMovies] = React.useState<MoviesList>(Movies);
     const navigation = useNavigation();
 
-    const renderItem = ({ item }: { item: MovieItem }) => (
-        <TouchableOpacity
-            onPress={() =>
+    const renderItem = React.useCallback(
+        ({ item }) => {
+            const moveToMovieDetail = () =>
                 navigation.navigate('MovieDetailTabScreen', {
                     movie: item
-                })
-            }
-        >
-            <Movie movie={item} />
-        </TouchableOpacity>
+                });
+            return <Movie movie={item} onPress={moveToMovieDetail} />;
+        },
+        [navigation]
     );
+
+    const memoizedRenderItem = React.useMemo(() => renderItem, [renderItem]);
 
     const itemSeparatorComponent = (_: number, rowId: number) => (
         <View
@@ -32,19 +34,49 @@ const MoviesTabScreen = () => {
         />
     );
 
+    const [movieSearch, setMovieSearch] = React.useState({ search: '' });
+
+    const searchMovieByTitle = (search: string) => {
+        setMovieSearch({ search });
+        setMovies(
+            Movies.filter(({ Title }) => {
+                const itemTitle = Title.toLowerCase();
+                const searchTitle = search.toLowerCase();
+                return itemTitle.includes(searchTitle);
+            })
+        );
+    };
+
     return (
         <View style={styles.container}>
+            <SearchBar
+                containerStyle={styles.searchContainer}
+                inputContainerStyle={styles.searchInput}
+                inputStyle={styles.searchInput}
+                placeholder="Movie Title ..."
+                onChangeText={searchMovieByTitle}
+                value={movieSearch.search}
+                lightTheme
+            />
+            <View
+                style={styles.listHeaderSeparator}
+                lightColor="#eee"
+                darkColor="rgba(255,255,255,0.1)"
+            />
             <FlatList
-                data={Movies}
+                data={movies}
+                removeClippedSubviews
+                maxToRenderPerBatch={6}
                 centerContent
-                windowSize={5}
+                initialNumToRender={6}
+                windowSize={6}
                 keyExtractor={({ imdbID }) => imdbID}
                 fadingEdgeLength={50}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
                 ItemSeparatorComponent={itemSeparatorComponent}
                 style={{ width: window.window.width / 1.1 }}
-                renderItem={renderItem}
+                renderItem={memoizedRenderItem}
             />
         </View>
     );
@@ -61,6 +93,23 @@ const styles = StyleSheet.create({
         marginVertical: 30,
         height: 1,
         width: '100%'
+    },
+    listHeaderSeparator: {
+        marginVertical: 10,
+        height: 1,
+        width: '100%'
+    },
+    searchContainer: {
+        marginTop: '2%',
+        borderRadius: 15,
+        height: window.window.height / 15,
+        width: '90%'
+    },
+    searchInput: {
+        color: 'black',
+        fontSize: 14,
+        borderRadius: 10,
+        height: window.window.height / 25
     }
 });
 

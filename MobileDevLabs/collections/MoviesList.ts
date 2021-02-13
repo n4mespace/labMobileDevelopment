@@ -1,9 +1,11 @@
-const Movies = [
+import { MoviesList } from '../types';
+
+const Movies: MoviesList = [
     {
         Title:
             'Long title that want to break your layout. Long title that want to break your layout. Long title that want to break your layout. Long title that want to break your layout',
         Year: '2020',
-        imdbID: '',
+        imdbID: 'testId',
         Type: 'test',
         Poster: ''
     },

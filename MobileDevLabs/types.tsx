@@ -26,9 +26,7 @@ export type MovieDetailTabParamList = {
     MovieDetailTabScreen: undefined;
 };
 
-export interface MoviesList {
-    Search: Array<MovieItem>;
-}
+export type MoviesList = Array<MovieItem>;
 
 export interface MovieItem {
     Title: string;
@@ -46,7 +44,7 @@ export interface MovieItem {
     Awards?: string;
     imdbRating?: string;
     imdbVotes?: string;
-    imdbID?: string;
+    imdbID: string;
     Type?: string;
     Production?: string;
     Poster: any;

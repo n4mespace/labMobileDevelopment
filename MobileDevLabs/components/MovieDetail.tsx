@@ -5,7 +5,7 @@ import { MovieItem } from '../types';
 import { View, Text } from './Themed';
 
 const MovieDetail = ({ movie }: { movie: MovieItem }) => (
-    <View style={styles.container} key={movie.imdbID}>
+    <View style={styles.container}>
         <Image
             source={movie.Poster}
             resizeMode="contain"

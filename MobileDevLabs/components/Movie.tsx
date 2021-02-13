@@ -1,26 +1,34 @@
 import * as React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import window from '../constants/Layout';
 import { MovieItem } from '../types';
 import { View, Text } from './Themed';
 
-const Movie = ({ movie }: { movie: MovieItem }) => (
-    <View style={styles.leftColumn}>
-        <Image
-            source={movie.Poster}
-            resizeMode="contain"
-            style={styles.image}
-        />
-        <View style={styles.infoColumn}>
-            <Text style={styles.mainText}>{movie.Title}</Text>
-            {movie.Year ? (
-                <Text style={styles.secondaryText}>{movie.Year}</Text>
-            ) : null}
-            {movie.Type ? (
-                <Text style={styles.secondaryText}>{movie.Type}</Text>
-            ) : null}
+const Movie = ({
+    movie,
+    onPress
+}: {
+    movie: MovieItem;
+    onPress: () => void;
+}) => (
+    <TouchableOpacity onPress={onPress}>
+        <View style={styles.leftColumn}>
+            <Image
+                source={movie.Poster}
+                resizeMode="contain"
+                style={styles.image}
+            />
+            <View style={styles.infoColumn}>
+                <Text style={styles.mainText}>{movie.Title}</Text>
+                {movie.Year ? (
+                    <Text style={styles.secondaryText}>{movie.Year}</Text>
+                ) : null}
+                {movie.Type ? (
+                    <Text style={styles.secondaryText}>{movie.Type}</Text>
+                ) : null}
+            </View>
         </View>
-    </View>
+    </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
