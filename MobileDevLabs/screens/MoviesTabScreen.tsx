@@ -5,12 +5,12 @@ import { useNavigation } from '@react-navigation/native';
 import Movie from '../components/Movie';
 import Movies from '../collections/MoviesList';
 import window from '../constants/Layout';
-import { View } from '../components/Themed';
-import { MovieItem, MoviesList } from '../types';
+import { View, Text } from '../components/Themed';
+import { MoviesList } from '../types';
 
 const MoviesTabScreen = () => {
-    const [movies, setMovies] = React.useState<MoviesList>(Movies);
     const navigation = useNavigation();
+    const [movies, setMovies] = React.useState<MoviesList>(Movies);
 
     const renderItem = React.useCallback(
         ({ item }) => {
@@ -35,16 +35,19 @@ const MoviesTabScreen = () => {
     );
 
     const [movieSearch, setMovieSearch] = React.useState({ search: '' });
+    const [notFoundMovies, setNotFoundMovies] = React.useState(false);
 
     const searchMovieByTitle = (search: string) => {
         setMovieSearch({ search });
-        setMovies(
-            Movies.filter(({ Title }) => {
-                const itemTitle = Title.toLowerCase();
-                const searchTitle = search.toLowerCase();
-                return itemTitle.includes(searchTitle);
-            })
-        );
+
+        const filteredMovies = Movies.filter(({ Title }) => {
+            const itemTitle = Title.toLowerCase();
+            const searchTitle = search.toLowerCase();
+            return itemTitle.includes(searchTitle);
+        });
+
+        setNotFoundMovies(filteredMovies.length === 0);
+        setMovies(filteredMovies);
     };
 
     return (
@@ -56,6 +59,7 @@ const MoviesTabScreen = () => {
                 placeholder="Movie Title ..."
                 onChangeText={searchMovieByTitle}
                 value={movieSearch.search}
+                disableFullscreenUI
                 lightTheme
             />
             <View
@@ -63,6 +67,9 @@ const MoviesTabScreen = () => {
                 lightColor="#eee"
                 darkColor="rgba(255,255,255,0.1)"
             />
+            {notFoundMovies ? (
+                <Text style={styles.moviesNotFound}>No items found!</Text>
+            ) : null}
             <FlatList
                 data={movies}
                 removeClippedSubviews
@@ -110,6 +117,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         borderRadius: 10,
         height: window.window.height / 25
+    },
+    moviesNotFound: {
+        marginTop: '5%',
+        fontSize: 30
     }
 });
 
