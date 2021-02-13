@@ -18,9 +18,23 @@ const MoviesTabScreen = () => {
                 navigation.navigate('MovieDetailTabScreen', {
                     movie: item
                 });
-            return <Movie movie={item} onPress={moveToMovieDetail} />;
+
+            const deleteMovie = () => {
+                const newMovies = movies.filter(
+                    ({ imdbID }) => imdbID !== item.imdbID
+                );
+                setMovies(newMovies);
+            };
+
+            return (
+                <Movie
+                    movie={item}
+                    moveToMovieDetail={moveToMovieDetail}
+                    deleteMovie={deleteMovie}
+                />
+            );
         },
-        [navigation]
+        [navigation, movies]
     );
 
     const memoizedRenderItem = React.useMemo(() => renderItem, [renderItem]);
@@ -35,20 +49,29 @@ const MoviesTabScreen = () => {
     );
 
     const [movieSearch, setMovieSearch] = React.useState({ search: '' });
+    const [filteredMovies, setFilteredMovies] = React.useState(movies);
     const [notFoundMovies, setNotFoundMovies] = React.useState(false);
 
-    const searchMovieByTitle = (search: string) => {
-        setMovieSearch({ search });
+    const searchMovieByTitle = React.useCallback(
+        (search: string) => {
+            setMovieSearch({ search });
 
-        const filteredMovies = Movies.filter(({ Title }) => {
-            const itemTitle = Title.toLowerCase();
-            const searchTitle = search.toLowerCase();
-            return itemTitle.includes(searchTitle);
-        });
+            const foundMovies = movies.filter(({ Title }) => {
+                const itemTitle = Title.toLowerCase();
+                const searchTitle = search.toLowerCase();
+                return itemTitle.includes(searchTitle);
+            });
 
-        setNotFoundMovies(filteredMovies.length === 0);
-        setMovies(filteredMovies);
-    };
+            setNotFoundMovies(foundMovies.length === 0);
+            setFilteredMovies(foundMovies);
+        },
+        [movies]
+    );
+
+    React.useEffect(() => {
+        setFilteredMovies(movies);
+        searchMovieByTitle('');
+    }, [movies, searchMovieByTitle]);
 
     return (
         <View style={styles.container}>
@@ -71,7 +94,7 @@ const MoviesTabScreen = () => {
                 <Text style={styles.moviesNotFound}>No items found!</Text>
             ) : null}
             <FlatList
-                data={movies}
+                data={filteredMovies}
                 removeClippedSubviews
                 maxToRenderPerBatch={6}
                 centerContent
