@@ -11,6 +11,7 @@ import GeneralTabScreen from '../screens/GeneralTabScreen';
 import DrawingTabScreen from '../screens/DrawingTabScreen';
 import MoviesTabScreen from '../screens/MoviesTabScreen';
 import MovieDetailTabScreen from '../screens/MovieDetailTabScreen';
+import AddMovieTabScreen from '../screens/AddMovieTabScreen';
 
 import {
     BottomTabParamList,
@@ -51,6 +52,11 @@ const MoviesTabNavigator = ({
         <MoviesTabStack.Screen
             name="MovieDetailTabScreen"
             component={MovieDetailTabScreen}
+            options={{ headerShown: false }}
+        />
+        <MoviesTabStack.Screen
+            name="AddMovieTabScreen"
+            component={AddMovieTabScreen}
             options={{ headerShown: false }}
         />
     </MoviesTabStack.Navigator>

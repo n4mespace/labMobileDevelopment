@@ -20,10 +20,7 @@ export type DrawingTabParamList = {
 export type MoviesTabParamList = {
     MoviesTabScreen: undefined;
     MovieDetailTabScreen: undefined;
-};
-
-export type MovieDetailTabParamList = {
-    MovieDetailTabScreen: undefined;
+    AddMovieTabScreen: undefined;
 };
 
 export type MoviesList = Array<MovieItem>;

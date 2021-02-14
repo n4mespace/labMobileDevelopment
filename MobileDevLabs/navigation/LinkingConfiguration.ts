@@ -19,7 +19,8 @@ export default {
                     Movies: {
                         screens: {
                             MoviesTabScreen: 'movies',
-                            MovieDetailTabScreen: 'movieDetail'
+                            MovieDetailTabScreen: 'movieDetail',
+                            AddMovieTabScreen: 'addMovie'
                         }
                     }
                 }

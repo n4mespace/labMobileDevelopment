@@ -7,24 +7,32 @@ import Movie from '../components/Movie';
 import Movies from '../collections/MoviesList';
 import window from '../constants/Layout';
 import { View, Text } from '../components/Themed';
-import { MoviesList } from '../types';
+import { MovieItem, MoviesList } from '../types';
 
 const MoviesTabScreen = () => {
     const navigation = useNavigation();
+    const [movies, setMovies] = React.useState<MoviesList>(Movies);
 
-    const addMovieButton = () => (
-        <Button
-            onPress={() => alert('Hi')}
-            icon={<AntDesign name="plus" size={25} color="black" />}
-            buttonStyle={styles.addMovieButton}
-        />
-    );
+    const addMovieButton = () => {
+        const addMovie = (movie: MovieItem) => {
+            setMovies([...movies, movie]);
+        };
+
+        const moveToAddMovie = () =>
+            navigation.navigate('AddMovieTabScreen', { addMovie });
+
+        return (
+            <Button
+                onPress={moveToAddMovie}
+                icon={<AntDesign name="plus" size={25} color="black" />}
+                buttonStyle={styles.addMovieButton}
+            />
+        );
+    };
 
     navigation.setOptions({
         headerRight: addMovieButton
     });
-
-    const [movies, setMovies] = React.useState<MoviesList>(Movies);
 
     const renderItem = React.useCallback(
         ({ item }) => {
