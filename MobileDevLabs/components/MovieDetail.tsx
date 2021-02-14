@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, ActivityIndicator } from 'react-native';
+import { Image } from 'react-native-elements';
 import window from '../constants/Layout';
 import { MovieItem } from '../types';
 import { View, Text } from './Themed';
@@ -10,6 +11,8 @@ const MovieDetail = ({ movie }: { movie: MovieItem }) => (
             source={movie.Poster}
             resizeMode="contain"
             style={styles.image}
+            placeholderStyle={{ backgroundColor: 'transparent' }}
+            PlaceholderContent={<ActivityIndicator color="gray" />}
         />
         {Object.entries(movie).map(([key, value], idx) =>
             key !== 'imdbID' && key !== 'Poster' ? (

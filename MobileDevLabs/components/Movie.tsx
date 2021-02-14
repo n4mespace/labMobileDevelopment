@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Overlay, Button } from 'react-native-elements';
+import { StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Overlay, Button, Image } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import window from '../constants/Layout';
 import { MovieItem } from '../types';
@@ -52,6 +52,8 @@ const Movie = ({
                 <Image
                     source={movie.Poster}
                     resizeMode="contain"
+                    placeholderStyle={{ backgroundColor: 'transparent' }}
+                    PlaceholderContent={<ActivityIndicator color="gray" />}
                     style={styles.image}
                 />
                 <View style={styles.infoColumn}>
