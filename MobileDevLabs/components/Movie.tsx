@@ -23,11 +23,17 @@ const Movie = ({
             <View style={styles.leftColumn}>
                 <Overlay
                     animationType="fade"
+                    hardwareAccelerated
                     removeClippedSubviews
                     isVisible={menuVisible}
                     onBackdropPress={toggleMenu}
                 >
-                    <>
+                    <View
+                        style={{
+                            width: window.window.width / 3,
+                            height: window.window.height / 4
+                        }}
+                    >
                         <Text style={styles.mainText}>Choose action:</Text>
                         <Button
                             onPress={deleteMovie}
@@ -41,7 +47,7 @@ const Movie = ({
                             title=" Delete"
                             buttonStyle={{ backgroundColor: 'gray' }}
                         />
-                    </>
+                    </View>
                 </Overlay>
                 <Image
                     source={movie.Poster}

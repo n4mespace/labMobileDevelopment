@@ -14,6 +14,7 @@ const MovieDetailTabScreen = ({
 }) => (
     <View style={styles.container}>
         <ScrollView
+            removeClippedSubviews
             fadingEdgeLength={50}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}

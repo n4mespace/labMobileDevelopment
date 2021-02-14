@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, FlatList } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import { SearchBar, Button } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons';
 import Movie from '../components/Movie';
 import Movies from '../collections/MoviesList';
 import window from '../constants/Layout';
@@ -10,6 +11,19 @@ import { MoviesList } from '../types';
 
 const MoviesTabScreen = () => {
     const navigation = useNavigation();
+
+    const addMovieButton = () => (
+        <Button
+            onPress={() => alert('Hi')}
+            icon={<AntDesign name="plus" size={25} color="black" />}
+            buttonStyle={styles.addMovieButton}
+        />
+    );
+
+    navigation.setOptions({
+        headerRight: addMovieButton
+    });
+
     const [movies, setMovies] = React.useState<MoviesList>(Movies);
 
     const renderItem = React.useCallback(
@@ -96,10 +110,10 @@ const MoviesTabScreen = () => {
             <FlatList
                 data={filteredMovies}
                 removeClippedSubviews
-                maxToRenderPerBatch={6}
+                maxToRenderPerBatch={10}
                 centerContent
-                initialNumToRender={6}
-                windowSize={6}
+                initialNumToRender={10}
+                windowSize={10}
                 keyExtractor={({ imdbID }) => imdbID}
                 fadingEdgeLength={50}
                 showsHorizontalScrollIndicator={false}
@@ -144,6 +158,10 @@ const styles = StyleSheet.create({
     moviesNotFound: {
         marginTop: '5%',
         fontSize: 30
+    },
+    addMovieButton: {
+        backgroundColor: 'transparent',
+        marginRight: 15
     }
 });
 
