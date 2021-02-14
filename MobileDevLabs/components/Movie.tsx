@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { LoadingIndicator } from 'dooboo-ui';
 import { Overlay, Button, Image } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import window from '../constants/Layout';
@@ -53,7 +54,7 @@ const Movie = ({
                     source={movie.Poster}
                     resizeMode="contain"
                     placeholderStyle={{ backgroundColor: 'transparent' }}
-                    PlaceholderContent={<ActivityIndicator color="gray" />}
+                    PlaceholderContent={<LoadingIndicator color="gray" />}
                     style={styles.image}
                 />
                 <View style={styles.infoColumn}>

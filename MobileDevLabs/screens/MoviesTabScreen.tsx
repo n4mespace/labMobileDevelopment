@@ -14,9 +14,7 @@ const MoviesTabScreen = () => {
     const [movies, setMovies] = React.useState<MoviesList>(Movies);
 
     const addMovieButton = () => {
-        const addMovie = (movie: MovieItem) => {
-            setMovies([...movies, movie]);
-        };
+        const addMovie = (movie: MovieItem) => setMovies([...movies, movie]);
 
         const moveToAddMovie = () =>
             navigation.navigate('AddMovieTabScreen', { addMovie });

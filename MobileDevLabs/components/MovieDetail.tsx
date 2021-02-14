@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { LoadingIndicator } from 'dooboo-ui';
 import { Image } from 'react-native-elements';
 import window from '../constants/Layout';
 import { MovieItem } from '../types';
@@ -12,7 +13,7 @@ const MovieDetail = ({ movie }: { movie: MovieItem }) => (
             resizeMode="contain"
             style={styles.image}
             placeholderStyle={{ backgroundColor: 'transparent' }}
-            PlaceholderContent={<ActivityIndicator color="gray" />}
+            PlaceholderContent={<LoadingIndicator color="gray" />}
         />
         {Object.entries(movie).map(([key, value], idx) =>
             key !== 'imdbID' && key !== 'Poster' ? (
