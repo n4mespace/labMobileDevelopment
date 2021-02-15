@@ -10,8 +10,13 @@ import { View, Text } from '../components/Themed';
 
 const GalleryTabScreen = () => {
     const navigation = useNavigation();
-    const [imagesGallery, setImagesGallery] = React.useState<Array<string>>([]);
-    const [foundImages, setFoundImages] = React.useState<boolean>(false);
+    const [imagesGallery, setImagesGallery] = React.useState<
+        Array<{ imageURI: string; idx: number }>
+    >([]);
+
+    const emptyGallery = (
+        <Text style={styles.imagesNotFound}>No items found!</Text>
+    );
 
     const pickImage = async () => {
         const imageObject = await ImagePicker.launchImageLibraryAsync({
@@ -21,8 +26,13 @@ const GalleryTabScreen = () => {
         });
 
         if (!imageObject.cancelled) {
-            setImagesGallery([...imagesGallery, imageObject.uri]);
-            setFoundImages(true);
+            const newImageIdx = imagesGallery.length + 1;
+            const newImage = {
+                imageURI: imageObject.uri,
+                idx: newImageIdx
+            };
+
+            setImagesGallery([...imagesGallery, newImage]);
         }
     };
 
@@ -38,17 +48,51 @@ const GalleryTabScreen = () => {
         headerRight: addImageButton
     });
 
+    const imageRenderOptions = React.useCallback(
+        () =>
+            new Map([
+                [1, { width: 2 / 3, height: 2 / 3 }],
+                [2, { width: 2 / 3 / 3, height: 1 / 2 }],
+                [3, { width: 2 / 3 / 3, height: 1 / 3 }],
+                [4, { width: 2 / 3 / 3, height: 1 / 3 }],
+                [5, { width: 1 / 3, height: 1 / 3 }],
+                [6, { width: 1 / 3, height: 1 / 2 }]
+            ]),
+        []
+    );
+
+    const getImageRenderOptionsByIdx = React.useCallback(
+        (idx: number) => {
+            const options = imageRenderOptions();
+            const optionsLength = options.size;
+            const imageOptions = options.get(idx % optionsLength);
+
+            if (imageOptions) {
+                const { width, height, ...rest } = imageOptions;
+                return {
+                    width: width * window.window.width,
+                    height: height * window.window.height,
+                    ...rest
+                };
+            }
+            return {};
+        },
+        [imageRenderOptions]
+    );
+
     const renderImage = React.useCallback(
         ({ item }) => (
-            <Image
-                resizeMode="contain"
-                source={{ uri: item }}
-                style={styles.image}
-                placeholderStyle={{ backgroundColor: 'transparent' }}
-                PlaceholderContent={<LoadingIndicator color="gray" />}
-            />
+            <View style={styles.imageContainer}>
+                <Image
+                    resizeMode="contain"
+                    source={{ uri: item.imageURI }}
+                    style={getImageRenderOptionsByIdx(item.idx)}
+                    placeholderStyle={{ backgroundColor: 'transparent' }}
+                    PlaceholderContent={<LoadingIndicator color="gray" />}
+                />
+            </View>
         ),
-        []
+        [getImageRenderOptionsByIdx]
     );
 
     React.useEffect(() => {
@@ -57,9 +101,7 @@ const GalleryTabScreen = () => {
                 status
             } = await ImagePicker.requestMediaLibraryPermissionsAsync();
             if (status !== 'granted') {
-                alert(
-                    'Sorry, we need camera roll permissions to make this work!'
-                );
+                alert('Sorry, we need your permissions to make this work!');
             }
         };
 
@@ -68,25 +110,21 @@ const GalleryTabScreen = () => {
 
     return (
         <View style={styles.container}>
-            {foundImages ? (
-                <FlatList
-                    data={imagesGallery}
-                    renderItem={renderImage}
-                    numColumns={3}
-                    fadingEdgeLength={50}
-                    removeClippedSubviews
-                    maxToRenderPerBatch={10}
-                    centerContent
-                    initialNumToRender={10}
-                    // style={{ width: window.window.width / 1.1 }}
-                    windowSize={10}
-                    showsHorizontalScrollIndicator={false}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                />
-            ) : (
-                <Text style={styles.imagesNotFound}>No items found!</Text>
-            )}
+            <FlatList
+                ListEmptyComponent={emptyGallery}
+                data={imagesGallery}
+                renderItem={renderImage}
+                numColumns={2}
+                fadingEdgeLength={50}
+                removeClippedSubviews
+                maxToRenderPerBatch={10}
+                centerContent
+                initialNumToRender={10}
+                windowSize={10}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item, index) => index.toString()}
+            />
         </View>
     );
 };
@@ -104,12 +142,11 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     imagesNotFound: {
+        marginTop: '25%',
         fontSize: 30
     },
-    image: {
-        height: window.window.height / 5,
-        width: window.window.width / 3,
-        margin: 5
+    imageContainer: {
+        // flex: 1
     }
 });
 
