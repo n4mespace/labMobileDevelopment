@@ -92,10 +92,12 @@ const GalleryTabNavigator = ({
     <GalleryTabStack.Navigator>
         <GalleryTabStack.Screen
             name="GalleryTabScreen"
-            options={{ headerTitle: 'Lab 5' }}
-        >
-            {() => <GalleryTabScreen screenOrientation={screenOrientation} />}
-        </GalleryTabStack.Screen>
+            component={GalleryTabScreen}
+            options={{
+                headerTitle: 'Lab 5',
+                headerShown: screenOrientation === 'portrait'
+            }}
+        />
     </GalleryTabStack.Navigator>
 );
 

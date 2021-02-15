@@ -1,31 +1,28 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Image } from 'react-native-elements';
-
 import { AntDesign } from '@expo/vector-icons';
-import { View } from '../components/Themed';
+import { LoadingIndicator } from 'dooboo-ui';
+import window from '../constants/Layout';
+import { View, Text } from '../components/Themed';
 
-const GalleryTabScreen = ({
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    screenOrientation
-}: {
-    screenOrientation: string;
-}) => {
+const GalleryTabScreen = () => {
     const navigation = useNavigation();
-    const [image, setImage] = React.useState<string>('');
+    const [imagesGallery, setImagesGallery] = React.useState<Array<string>>([]);
+    const [foundImages, setFoundImages] = React.useState<boolean>(false);
 
     const pickImage = async () => {
         const imageObject = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4, 3],
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            aspect: [4, 4],
             quality: 1
         });
 
         if (!imageObject.cancelled) {
-            setImage(imageObject.uri);
+            setImagesGallery([...imagesGallery, imageObject.uri]);
+            setFoundImages(true);
         }
     };
 
@@ -41,8 +38,21 @@ const GalleryTabScreen = ({
         headerRight: addImageButton
     });
 
+    const renderImage = React.useCallback(
+        ({ item }) => (
+            <Image
+                resizeMode="contain"
+                source={{ uri: item }}
+                style={styles.image}
+                placeholderStyle={{ backgroundColor: 'transparent' }}
+                PlaceholderContent={<LoadingIndicator color="gray" />}
+            />
+        ),
+        []
+    );
+
     React.useEffect(() => {
-        (async () => {
+        const askForUserPermissions = async () => {
             const {
                 status
             } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -51,16 +61,31 @@ const GalleryTabScreen = ({
                     'Sorry, we need camera roll permissions to make this work!'
                 );
             }
-        })();
+        };
+
+        askForUserPermissions();
     }, []);
 
     return (
         <View style={styles.container}>
-            {image && (
-                <Image
-                    source={{ uri: image }}
-                    style={{ width: 200, height: 200 }}
+            {foundImages ? (
+                <FlatList
+                    data={imagesGallery}
+                    renderItem={renderImage}
+                    numColumns={3}
+                    fadingEdgeLength={50}
+                    removeClippedSubviews
+                    maxToRenderPerBatch={10}
+                    centerContent
+                    initialNumToRender={10}
+                    // style={{ width: window.window.width / 1.1 }}
+                    windowSize={10}
+                    showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item, index) => index.toString()}
                 />
+            ) : (
+                <Text style={styles.imagesNotFound}>No items found!</Text>
             )}
         </View>
     );
@@ -71,11 +96,20 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: '3%',
         alignItems: 'center',
-        justifyContent: 'center'
+        alignContent: 'stretch',
+        justifyContent: 'space-evenly'
     },
     addImageButton: {
         backgroundColor: 'transparent',
         marginRight: 15
+    },
+    imagesNotFound: {
+        fontSize: 30
+    },
+    image: {
+        height: window.window.height / 5,
+        width: window.window.width / 3,
+        margin: 5
     }
 });
 
