@@ -22,6 +22,11 @@ export default {
                             MovieDetailTabScreen: 'movieDetail',
                             AddMovieTabScreen: 'addMovie'
                         }
+                    },
+                    Gallery: {
+                        screens: {
+                            GalleryTabScreen: 'gallery'
+                        }
                     }
                 }
             },

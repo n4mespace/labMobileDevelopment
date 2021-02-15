@@ -7,30 +7,34 @@ import { Dimensions } from 'react-native';
 import Colors from '../constants/Colors';
 import window from '../constants/Layout';
 import useColorScheme from '../hooks/useColorScheme';
+
 import GeneralTabScreen from '../screens/GeneralTabScreen';
 import DrawingTabScreen from '../screens/DrawingTabScreen';
 import MoviesTabScreen from '../screens/MoviesTabScreen';
 import MovieDetailTabScreen from '../screens/MovieDetailTabScreen';
 import AddMovieTabScreen from '../screens/AddMovieTabScreen';
+import GalleryTabScreen from '../screens/GalleryTabScreen';
 
 import {
     BottomTabParamList,
     GeneralTabParamList,
     MoviesTabParamList,
-    DrawingTabParamList
+    DrawingTabParamList,
+    GalleryTabParamList
 } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 const GeneralTabStack = createStackNavigator<GeneralTabParamList>();
 const DrawingTabStack = createStackNavigator<DrawingTabParamList>();
 const MoviesTabStack = createStackNavigator<MoviesTabParamList>();
+const GalleryTabStack = createStackNavigator<GalleryTabParamList>();
 
 const GeneralTabNavigator = () => (
     <GeneralTabStack.Navigator>
         <GeneralTabStack.Screen
             name="GeneralTabScreen"
             component={GeneralTabScreen}
-            options={{ headerTitle: 'Lab 4' }}
+            options={{ headerTitle: 'Lab 5' }}
         />
     </GeneralTabStack.Navigator>
 );
@@ -45,7 +49,7 @@ const MoviesTabNavigator = ({
             name="MoviesTabScreen"
             component={MoviesTabScreen}
             options={{
-                headerTitle: 'Lab 4',
+                headerTitle: 'Lab 5',
                 headerShown: screenOrientation === 'portrait'
             }}
         />
@@ -71,13 +75,28 @@ const DrawingTabNavigator = ({
         <DrawingTabStack.Screen
             name="DrawingTabScreen"
             options={{
-                headerTitle: 'Lab 4',
+                headerTitle: 'Lab 5',
                 headerShown: screenOrientation === 'portrait'
             }}
         >
             {() => <DrawingTabScreen screenOrientation={screenOrientation} />}
         </DrawingTabStack.Screen>
     </DrawingTabStack.Navigator>
+);
+
+const GalleryTabNavigator = ({
+    screenOrientation
+}: {
+    screenOrientation: string;
+}) => (
+    <GalleryTabStack.Navigator>
+        <GalleryTabStack.Screen
+            name="GalleryTabScreen"
+            options={{ headerTitle: 'Lab 5' }}
+        >
+            {() => <GalleryTabScreen screenOrientation={screenOrientation} />}
+        </GalleryTabStack.Screen>
+    </GalleryTabStack.Navigator>
 );
 
 const TabBarIcon = (props: {
@@ -133,6 +152,20 @@ const BottomTabNavigator = () => {
             >
                 {() => (
                     <MoviesTabNavigator screenOrientation={screenOrientation} />
+                )}
+            </BottomTab.Screen>
+            <BottomTab.Screen
+                name="Gallery"
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <TabBarIcon name="camera" color={color} />
+                    )
+                }}
+            >
+                {() => (
+                    <GalleryTabNavigator
+                        screenOrientation={screenOrientation}
+                    />
                 )}
             </BottomTab.Screen>
         </BottomTab.Navigator>

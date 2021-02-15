@@ -7,6 +7,7 @@ export type BottomTabParamList = {
     General: undefined;
     Drawing: undefined;
     Movies: undefined;
+    Gallery: undefined;
 };
 
 export type GeneralTabParamList = {
@@ -15,6 +16,10 @@ export type GeneralTabParamList = {
 
 export type DrawingTabParamList = {
     DrawingTabScreen: undefined;
+};
+
+export type GalleryTabParamList = {
+    GalleryTabScreen: undefined;
 };
 
 export type MoviesTabParamList = {
