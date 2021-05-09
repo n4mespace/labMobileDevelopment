@@ -23,6 +23,7 @@ module.exports = {
         'react/jsx-props-no-spreading': 'warn',
         'global-require': 'warn',
         'react/prop-types': ['off'],
+        'react-native/no-inline-styles': ['off'],
         'import/no-dynamic-require': 'warn'
     }
 };

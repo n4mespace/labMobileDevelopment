@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { VictoryPie } from '../hooks/Victory';
-import window from '../constants/Layout';
+import { window } from '../constants/Layout';
 import { View } from './Themed';
 
 const data = [
@@ -21,7 +21,7 @@ const Diagram = () => (
             colorScale={colorScale}
             labels={[]}
             data={data}
-            innerRadius={window.window.width / 5}
+            innerRadius={window.width / 5}
         />
     </View>
 );

@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 import Movie from '../components/Movie';
 import Movies from '../collections/MoviesList';
-import window from '../constants/Layout';
+import { window } from '../constants/Layout';
 import { View, Text } from '../components/Themed';
 import { MovieItem, MoviesList } from '../types';
 
@@ -125,7 +125,7 @@ const MoviesTabScreen = () => {
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
                 ItemSeparatorComponent={itemSeparatorComponent}
-                style={{ width: window.window.width / 1.1 }}
+                style={{ width: window.width / 1.1 }}
                 renderItem={memoizedRenderItem}
             />
         </View>
@@ -152,14 +152,14 @@ const styles = StyleSheet.create({
     searchContainer: {
         marginTop: '2%',
         borderRadius: 15,
-        height: window.window.height / 15,
+        height: window.height / 15,
         width: '90%'
     },
     searchInput: {
         color: 'black',
         fontSize: 14,
         borderRadius: 10,
-        height: window.window.height / 25
+        height: window.height / 25
     },
     moviesNotFound: {
         marginTop: '5%',

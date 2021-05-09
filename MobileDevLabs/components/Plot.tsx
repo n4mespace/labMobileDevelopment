@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { VictoryLine, VictoryChart, VictoryTheme } from '../hooks/Victory';
-import window from '../constants/Layout';
+import { window } from '../constants/Layout';
 import { View } from './Themed';
 
 const Plot = () => (
@@ -10,8 +10,8 @@ const Plot = () => (
             <VictoryLine
                 domain={{ x: [-4, 4], y: [-1, 1] }}
                 responsive={false}
-                height={window.window.height / 1.5}
-                width={window.window.width / 1.5}
+                height={window.height / 1.5}
+                width={window.width / 1.5}
                 style={{
                     data: { stroke: '#c43a31' },
                     parent: { border: '1px solid #ccc' }

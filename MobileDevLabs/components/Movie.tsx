@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { LoadingIndicator } from 'dooboo-ui';
 import { Overlay, Button, Image } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
-import window from '../constants/Layout';
+import { window } from '../constants/Layout';
 import { MovieItem } from '../types';
 import { View, Text } from './Themed';
 
@@ -31,8 +31,8 @@ const Movie = ({
                 >
                     <View
                         style={{
-                            width: window.window.width / 3,
-                            height: window.window.height / 4
+                            width: window.width / 3,
+                            height: window.height / 4
                         }}
                     >
                         <Text style={styles.mainText}>Choose action:</Text>
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     image: {
-        height: window.window.height / 5,
-        width: window.window.width / 3,
+        height: window.height / 5,
+        width: window.width / 3,
         margin: 5
     },
     infoColumn: {

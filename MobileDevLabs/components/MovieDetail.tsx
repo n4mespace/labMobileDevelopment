@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { LoadingIndicator } from 'dooboo-ui';
 import { Image } from 'react-native-elements';
-import window from '../constants/Layout';
+import { window } from '../constants/Layout';
 import { MovieItem } from '../types';
 import { View, Text } from './Themed';
 
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     },
     image: {
         alignSelf: 'center',
-        height: window.window.height / 2,
-        width: window.window.width / 1.5,
+        height: window.height / 2,
+        width: window.width / 1.5,
         margin: 20
     },
     separator: {

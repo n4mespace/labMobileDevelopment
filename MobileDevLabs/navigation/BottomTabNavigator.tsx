@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Dimensions } from 'react-native';
 
 import Colors from '../constants/Colors';
-import window from '../constants/Layout';
+import { isPortrait, window } from '../constants/Layout';
 import useColorScheme from '../hooks/useColorScheme';
 
 import GeneralTabScreen from '../screens/GeneralTabScreen';
@@ -85,19 +85,27 @@ const DrawingTabNavigator = ({
 );
 
 const GalleryTabNavigator = ({
-    screenOrientation
+    screenOrientation,
+    windowDims
 }: {
     screenOrientation: string;
+    windowDims: { height: number; width: number };
 }) => (
     <GalleryTabStack.Navigator>
         <GalleryTabStack.Screen
             name="GalleryTabScreen"
-            component={GalleryTabScreen}
             options={{
                 headerTitle: 'Lab 5',
                 headerShown: screenOrientation === 'portrait'
             }}
-        />
+        >
+            {() => (
+                <GalleryTabScreen
+                    screenOrientation={screenOrientation}
+                    windowDims={windowDims}
+                />
+            )}
+        </GalleryTabStack.Screen>
     </GalleryTabStack.Navigator>
 );
 
@@ -108,13 +116,29 @@ const TabBarIcon = (props: {
 
 const BottomTabNavigator = () => {
     const colorScheme = useColorScheme();
-    const [screenOrientation, setScreenOrientation] = React.useState(
-        window.isPortrait() ? 'portrait' : 'landscape'
+
+    const [windowDims, setWindowDims] = React.useState<{
+        height: number;
+        width: number;
+    }>(window);
+
+    const [screenOrientation, setScreenOrientation] = React.useState<string>(
+        isPortrait() ? 'portrait' : 'landscape'
     );
 
-    Dimensions.addEventListener('change', () =>
-        setScreenOrientation(window.isPortrait() ? 'portrait' : 'landscape')
-    );
+    const onDimensionsChange = () => {
+        setScreenOrientation(isPortrait() ? 'portrait' : 'landscape');
+
+        const { width, height } = Dimensions.get('window');
+        setWindowDims({ width, height });
+    };
+
+    React.useEffect(() => {
+        Dimensions.addEventListener('change', onDimensionsChange);
+        return () => {
+            Dimensions.removeEventListener('change', onDimensionsChange);
+        };
+    });
 
     return (
         <BottomTab.Navigator
@@ -167,6 +191,7 @@ const BottomTabNavigator = () => {
                 {() => (
                     <GalleryTabNavigator
                         screenOrientation={screenOrientation}
+                        windowDims={windowDims}
                     />
                 )}
             </BottomTab.Screen>
