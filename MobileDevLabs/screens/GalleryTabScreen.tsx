@@ -6,6 +6,7 @@ import { Button, Image } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import { LoadingIndicator } from 'dooboo-ui';
 import { View } from '../components/Themed';
+import utils from '../utils';
 
 const GalleryTabScreen = ({
     screenOrientation,
@@ -86,49 +87,32 @@ const GalleryTabScreen = ({
         askForUserPermissions();
     }, []);
 
-    const smallImage = (imageUri: string) => (
+    const renderImage = (
+        imageUri: string,
+        imageSize: { height: number; width: number }
+    ) => (
         <Image
             source={{ uri: imageUri }}
-            style={getSmallImageSize()}
+            style={imageSize}
             resizeMode="stretch"
             placeholderStyle={{ backgroundColor: 'transparent' }}
             PlaceholderContent={<LoadingIndicator color="gray" />}
         />
     );
 
-    const mediumImage = (imageUri: string) => (
-        <Image
-            source={{ uri: imageUri }}
-            style={getMediumImageSize()}
-            resizeMode="stretch"
-            placeholderStyle={{ backgroundColor: 'transparent' }}
-            PlaceholderContent={<LoadingIndicator color="gray" />}
-        />
-    );
+    const smallImage = (imageUri: string) =>
+        renderImage(imageUri, getSmallImageSize());
 
-    const largeImage = (imageUri: string) => (
-        <Image
-            source={{ uri: imageUri }}
-            style={getLargeImageSize()}
-            resizeMode="stretch"
-            placeholderStyle={{ backgroundColor: 'transparent' }}
-            PlaceholderContent={<LoadingIndicator color="gray" />}
-        />
-    );
+    const mediumImage = (imageUri: string) =>
+        renderImage(imageUri, getMediumImageSize());
 
-    const arrayChunks = (
-        array: Array<string>,
-        chunk_size: number
-    ): Array<Array<string>> =>
-        Array(Math.ceil(array.length / chunk_size))
-            .fill(0)
-            .map((_, index) => index * chunk_size)
-            .map((begin) => array.slice(begin, begin + chunk_size));
+    const largeImage = (imageUri: string) =>
+        renderImage(imageUri, getLargeImageSize());
 
     return (
         <ScrollView style={styles.container} centerContent>
             {imagesGallery.length
-                ? arrayChunks(imagesGallery, 6).map((images) => (
+                ? utils.arrayChunks(imagesGallery, 6).map((images) => (
                       <View style={{ flexDirection: 'column' }}>
                           <View style={{ flexDirection: 'row' }}>
                               <View
