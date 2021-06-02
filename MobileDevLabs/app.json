@@ -1,0 +1,30 @@
+{
+    "expo": {
+        "name": "MobileDevLabs_5",
+        "slug": "MobileDevLabs_5",
+        "version": "1.0.0",
+        "orientation": "default",
+        "icon": "./assets/images/adaptive-icon.png",
+        "scheme": "myapp",
+        "userInterfaceStyle": "automatic",
+        "splash": {
+            "image": "./assets/images/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/images/adaptive-icon.png",
+                "backgroundColor": "#FFFFFF"
+            }
+        },
+        "web": {
+            "favicon": "./assets/images/favicon.png"
+        },
+        "description": ""
+    }
+}
